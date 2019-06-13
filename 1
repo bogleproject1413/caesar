@@ -2,26 +2,22 @@
 	#include <cs50.h>
 	#include <stdio.h>
 	#include <string.h>
-	#include <stdlib.h>
 	#include <ctype.h>
 	
 	int main(int argc, string argv[])
 	{
-	    //declare variables
-	    int argv_length, key, plaintext_length;
-	    string plaintext;
-	    string ciphertext;
+	    // declared variables
+	    int key;
 	
-	    //take and validate argc
-	    //should be two arguments 
+	    // check command-line for two arguments
 	    if (argc != 2)
 	    {
 	        printf("Usage: ./caesar key\n");
 	        return 1;
 	    }
 	
-	    //verify that argv is an int
-	    argv_length = strlen(argv[1]);
+	    //verify that the key(argv[1]) is an integer
+	    int argv_length = strlen(argv[1]);
 	    for (int i = 0; i < argv_length; ++i)
 	    {
 	        if (argv[1][i] < 48 || argv[1][i] > 57)
@@ -31,36 +27,38 @@
 	        }
 	        else
 	        {
+		    // atoi - conversion of string to int
 	            key = atoi(argv[1]);
 	        } 
 	    }
 	
-	    //take and validate plaintext
-	    plaintext = get_string("plaintext:  ");
-	    plaintext_length = strlen(plaintext);
-	
-	    //encript the plaintext/print ciphertext
+	    // make and validate plaintext
+	    string plaintext = get_string("plaintext:  ");
+	    int plaintext_length = strlen(plaintext);
+
 	    printf("ciphertext: ");
+	    // Preserve case for each alphabetical character
 	    for (int i = 0; i < plaintext_length; ++i)
-	       {
+	    {
 	        if (isalpha(plaintext[i]))
 	        {
-	            //check if upper
+	            // treat as uppercase
 	            if (isupper(plaintext[i]))
 	            {
+		        // run character through algorithm: c(i) = p(i) + k
+			// 65 for uppercase in ASCII table
 	                printf("%c", (((plaintext[i] - 65) + key) % 26) + 65);
-	
 	            }
-	
-	            else
-	                //consider this as lower case
+	            else	         
 	            {
+		        // treat as lowercase
+			// 97 for lowercase in ASCII table
 	                printf("%c", (((plaintext[i] - 97) + key) % 26) + 97);
 	            }
-	
 	        }
 	        else
 	        {
+		    // preserve symbols	
 	            printf("%c", plaintext[i]);
 	        }
 	    }
