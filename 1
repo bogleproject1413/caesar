@@ -1,0 +1,69 @@
+//caesar 
+	#include <cs50.h>
+	#include <stdio.h>
+	#include <string.h>
+	#include <stdlib.h>
+	#include <ctype.h>
+	
+	int main(int argc, string argv[])
+	{
+	    //declare variables
+	    int argv_length, key, plaintext_length;
+	    string plaintext;
+	    string ciphertext;
+	
+	    //take and validate argc
+	    //should be two arguments 
+	    if (argc != 2)
+	    {
+	        printf("Usage: ./caesar key\n");
+	        return 1;
+	    }
+	
+	    //verify that argv is an int
+	    argv_length = strlen(argv[1]);
+	    for (int i = 0; i < argv_length; ++i)
+	    {
+	        if (argv[1][i] < 48 || argv[1][i] > 57)
+	        {
+	            printf("Usage: ./caesar key\n");
+	            return 1;
+	        }
+	        else
+	        {
+	            key = atoi(argv[1]);
+	        } 
+	    }
+	
+	    //take and validate plaintext
+	    plaintext = get_string("plaintext:  ");
+	    plaintext_length = strlen(plaintext);
+	
+	    //encript the plaintext/print ciphertext
+	    printf("ciphertext: ");
+	    for (int i = 0; i < plaintext_length; ++i)
+	       {
+	        if (isalpha(plaintext[i]))
+	        {
+	            //check if upper
+	            if (isupper(plaintext[i]))
+	            {
+	                printf("%c", (((plaintext[i] - 65) + key) % 26) + 65);
+	
+	            }
+	
+	            else
+	                //consider this as lower case
+	            {
+	                printf("%c", (((plaintext[i] - 97) + key) % 26) + 97);
+	            }
+	
+	        }
+	        else
+	        {
+	            printf("%c", plaintext[i]);
+	        }
+	    }
+	    printf("\n");
+	    return 0;
+	}
